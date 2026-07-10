@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VidSage — Chat with any YouTube video</title>
+<meta name="description" content="Paste a YouTube link, then ask it anything — in any language. Answers grounded in the transcript, cited to the second." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/landing.css" />
+</head>
+<body>
+
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+<nav class="nav">
+  <a class="logo" href="/">
+    <span class="logo-mark">▶</span> VidSage
+  </a>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a class="btn ghost" href="auth.html">Sign in</a>
+    <a class="btn solid" href="auth.html#register">Get started free</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="tc">00:00</span> RAG FOR VIDEO · ANY LANGUAGE</p>
+    <h1>
+      <span class="line-1">Stop <span class="scrub-word">scrubbing<span class="scrub-head"></span></span>.</span>
+      <span class="line-2 shimmer">Ask the video.</span>
+    </h1>
+    <p class="lede">Paste any YouTube link and VidSage reads the whole transcript for you.
+      Ask anything, in any language — Bangla, English, Hindi, anything — and get answers grounded
+      in what was actually said, cited to the exact second.</p>
+
+    <form class="hero-form" id="hero-form">
+      <span class="paste-icon">⌘V</span>
+      <input type="url" id="hero-url" placeholder="https://youtube.com/watch?v=…" required />
+      <button type="submit" class="btn solid">Analyze →</button>
+    </form>
+    <p class="hero-note">Free to use · Whisper voice input · No credit card</p>
+  </div>
+
+  <!-- 3D hover demo — tilts toward the cursor, glows, and plays a scripted demo on loop -->
+  <div class="hero-stage">
+    <div class="demo-glow" aria-hidden="true"></div>
+    <div class="demo-tilt" id="demo-tilt">
+      <div class="demo-panel" id="demo-panel" aria-label="Product demo">
+        <div class="demo-topbar">
+          <span class="demo-dot"></span><span class="demo-dot"></span><span class="demo-dot"></span>
+          <div class="demo-url"><span id="demo-url-text"></span><span class="demo-caret"></span></div>
+          <span class="demo-analyze" id="demo-analyze">Analyze</span>
+        </div>
+        <div class="demo-body">
+          <div class="demo-player" id="demo-player">
+            <span class="demo-play">▶</span>
+            <div class="demo-progress"><div class="demo-progress-fill" id="demo-progress"></div></div>
+          </div>
+          <div class="demo-chat" id="demo-chat"></div>
+        </div>
+        <div class="demo-badge">LIVE DEMO</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>[00:12] "so the key idea here is…"</span><span>◆</span>
+    <span>[04:37] "let me show you an example"</span><span>◆</span>
+    <span>[১১:০২] "এখানেই বেশিরভাগ মানুষ ভুল করে"</span><span>◆</span>
+    <span>[18:45] "to summarize everything we covered"</span><span>◆</span>
+    <span>[00:12] "so the key idea here is…"</span><span>◆</span>
+    <span>[04:37] "let me show you an example"</span><span>◆</span>
+    <span>[১১:০২] "এখানেই বেশিরভাগ মানুষ ভুল করে"</span><span>◆</span>
+    <span>[18:45] "to summarize everything we covered"</span><span>◆</span>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <p class="eyebrow"><span class="tc">00:01</span> HOW IT WORKS</p>
+  <h2>From link to answer in seconds</h2>
+  <div class="timeline">
+    <article class="step">
+      <span class="step-tc">STEP 01</span>
+      <h3>Paste a link</h3>
+      <p>Any YouTube URL — lectures, podcasts, tutorials, shorts — in any caption language. VidSage pulls the full transcript.</p>
+    </article>
+    <article class="step">
+      <span class="step-tc">STEP 02</span>
+      <h3>We index every second</h3>
+      <p>The transcript is chunked with timestamps and embedded into a multilingual vector store on your machine.</p>
+    </article>
+    <article class="step">
+      <span class="step-tc">STEP 03</span>
+      <h3>Ask anything, in any language</h3>
+      <p>Answers stream in live, in the language you asked in, with clickable timestamps that jump the player to the source moment.</p>
+    </article>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <p class="eyebrow"><span class="tc">00:02</span> FEATURES</p>
+  <h2>Everything you need to learn from video, faster</h2>
+  <div class="grid">
+    <article class="card wide">
+      <div>
+        <h3>Watch &amp; ask, side by side</h3>
+        <p>The video plays on the left while you interrogate it on the right. Every cited timestamp is a button — click it and the player jumps there. No more scrubbing back and forth hunting for "that part".</p>
+      </div>
+      <div class="card-visual split-visual">
+        <div class="sv-player"><span>▶</span></div>
+        <div class="sv-chat">
+          <div class="sv-msg u">ভিডিওটার মূল বক্তব্য কী?</div>
+          <div class="sv-msg b">মূল বক্তব্য হলো… <b class="chip">4:37</b></div>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <h3>Ask in any language</h3>
+      <p>The video can be in Bangla, the question in English, the answer in whichever language you asked — multilingual embeddings make it all one conversation.</p>
+      <span class="card-icon">🌐</span>
+    </article>
+    <article class="card">
+      <h3>Timestamped summary</h3>
+      <p>A chapter-by-chapter timeline of the whole video. Every chapter shows its start time and is a one-click jump into the player.</p>
+      <span class="card-icon">🕒</span>
+    </article>
+    <article class="card">
+      <h3>Whisper voice input</h3>
+      <p>Tap the mic and just talk — Whisper transcribes your question locally, free, in 90+ languages. Answers can be read aloud too.</p>
+      <span class="card-icon">🎙</span>
+    </article>
+    <article class="card">
+      <h3>Live streaming answers</h3>
+      <p>No spinners. Tokens appear the moment the model thinks them, so even long answers feel instant.</p>
+      <span class="card-icon">⚡</span>
+    </article>
+    <article class="card">
+      <h3>Flashcards &amp; quizzes</h3>
+      <p>Turn any lecture into flip-to-reveal study cards and a scored 5-question quiz — proven tools for actually retaining what you watched.</p>
+      <span class="card-icon">🎓</span>
+    </article>
+    <article class="card">
+      <h3>Export your notes</h3>
+      <p>One click downloads the summary, timeline and full conversation as clean Markdown — ready to paste into Notion or Obsidian.</p>
+      <span class="card-icon">⬇</span>
+    </article>
+    <article class="card">
+      <h3>Searchable transcript</h3>
+      <p>The full caption track, timestamped and filterable. Find the exact sentence and jump to it.</p>
+      <span class="card-icon">🔍</span>
+    </article>
+    <article class="card">
+      <h3>Your video library</h3>
+      <p>Every video you analyze is saved to your library — reopen it any time and keep asking.</p>
+      <span class="card-icon">🗂</span>
+    </article>
+    <article class="card">
+      <h3>Private by design</h3>
+      <p>Embeddings and vector search run on your own machine. Transcripts never leave your server except the excerpts sent for each answer.</p>
+      <span class="card-icon">🔒</span>
+    </article>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <p class="eyebrow center"><span class="tc">00:03</span> PRICING</p>
+  <h2>Simple plans, honest limits</h2>
+  <div class="price-grid">
+    <article class="price-card">
+      <h3>Starter</h3>
+      <p class="price"><span>$0</span>/month</p>
+      <p class="price-sub">For trying it out</p>
+      <ul>
+        <li>10 videos per month</li>
+        <li>Chat, summary &amp; transcript search</li>
+        <li>Any language, any video</li>
+        <li>Voice input &amp; read-aloud</li>
+        <li>Community support</li>
+      </ul>
+      <a class="btn ghost full" href="auth.html#register">Start free</a>
+    </article>
+    <article class="price-card featured">
+      <span class="price-flag">MOST POPULAR</span>
+      <h3>Pro</h3>
+      <p class="price"><span>$9</span>/month</p>
+      <p class="price-sub">For students &amp; researchers</p>
+      <ul>
+        <li>Unlimited videos</li>
+        <li>Timestamped timelines &amp; chapters</li>
+        <li>Flashcards &amp; quizzes</li>
+        <li>Markdown export to Notion/Obsidian</li>
+        <li>Priority processing</li>
+      </ul>
+      <a class="btn solid full" href="auth.html#register">Go Pro</a>
+    </article>
+    <article class="price-card">
+      <h3>Team</h3>
+      <p class="price"><span>$29</span>/month</p>
+      <p class="price-sub">For teams &amp; classrooms</p>
+      <ul>
+        <li>Everything in Pro</li>
+        <li>5 seats, shared library</li>
+        <li>Self-host with your own keys</li>
+        <li>API access</li>
+        <li>Email support</li>
+      </ul>
+      <a class="btn ghost full" href="auth.html#register">Start a team</a>
+    </article>
+  </div>
+  <p class="hero-note center">Self-hosting? The whole stack runs on free APIs — bring a free Groq or Hugging Face key and pay nothing.</p>
+</section>
+
+<section class="cta">
+  <p class="eyebrow center"><span class="tc">00:04</span> START NOW</p>
+  <h2>The next video you watch<br />can answer back.</h2>
+  <a class="btn solid big" href="auth.html#register">Create your free account</a>
+</section>
+
+<footer class="footer">
+  <span><span class="logo-mark">▶</span> VidSage</span>
+  <span class="tc">EOF — thanks for watching</span>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/landing.js"></script>
+</body>
+</html>

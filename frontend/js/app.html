@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Workspace — VidSage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="/"><span class="logo-mark">▶</span> VidSage</a>
+  <form class="url-form" id="url-form">
+    <input type="url" id="url-input" placeholder="Paste a YouTube link to analyze…" required />
+    <button type="submit" class="btn solid" id="analyze-btn">Analyze</button>
+  </form>
+  <div class="topbar-right">
+    <button class="btn ghost" id="library-btn">Library</button>
+    <button class="btn ghost" id="signout-btn" title="Sign out">Sign out</button>
+  </div>
+</header>
+
+<div class="ingest-status" id="ingest-status" hidden>
+  <span class="spinner"></span><span id="ingest-text">Reading the transcript…</span>
+</div>
+
+<main class="workspace" id="workspace">
+  <!-- empty state -->
+  <section class="empty-state" id="empty-state">
+    <div class="empty-card">
+      <span class="empty-icon">▶</span>
+      <h2>Load a video to begin</h2>
+      <p>Paste any YouTube URL above. VidSage indexes the transcript,
+         then you can chat with the video, summarize it, search it, or quiz yourself on it.</p>
+      <p class="hint">Tip: try a lecture, podcast or tutorial with captions.</p>
+    </div>
+  </section>
+
+  <!-- split view -->
+  <section class="split" id="split" hidden>
+    <div class="left">
+      <div class="player-shell"><div id="player"></div></div>
+      <div class="video-meta">
+        <h2 id="video-title">—</h2>
+        <p id="video-author" class="muted">—</p>
+      </div>
+      <div class="suggested" id="suggested"></div>
+    </div>
+
+    <div class="right">
+      <nav class="tabs" role="tablist">
+        <button class="tab active" data-tab="chat" role="tab">Chat</button>
+        <button class="tab" data-tab="summary" role="tab">Summary</button>
+        <button class="tab" data-tab="transcript" role="tab">Transcript</button>
+        <button class="tab" data-tab="quiz" role="tab">Quiz</button>
+        <button class="tab" data-tab="cards" role="tab">Cards</button>
+        <button class="icon-btn small" id="export-btn" title="Export notes as Markdown">⬇</button>
+        <label class="tts-toggle" title="Read answers aloud">
+          <input type="checkbox" id="tts-toggle" /> <span>🔊 Read aloud</span>
+        </label>
+      </nav>
+
+      <!-- CHAT -->
+      <section class="pane active" id="pane-chat">
+        <div class="messages" id="messages">
+          <div class="msg bot">
+            <div class="msg-body">Video loaded. Ask me anything about it — I'll answer only from what was actually said, with timestamps you can click.</div>
+          </div>
+        </div>
+        <form class="composer" id="composer">
+          <button type="button" class="icon-btn" id="mic-btn" title="Ask by voice">🎙</button>
+          <input type="text" id="question-input" placeholder="Ask about this video…" autocomplete="off" required />
+          <button type="submit" class="btn solid" id="send-btn">Send</button>
+        </form>
+      </section>
+
+      <!-- SUMMARY -->
+      <section class="pane" id="pane-summary">
+        <div class="pane-scroll">
+          <div id="summary-body">
+            <div class="pane-empty">
+              <p>Get the gist without watching the whole thing.</p>
+              <button class="btn solid" id="summary-btn">Generate summary</button>
+            </div>
+          </div>
+          <div id="chapters-body">
+            <div class="pane-empty">
+              <p>Or get a timestamped timeline — every chapter is a jump button.</p>
+              <button class="btn ghost" id="chapters-btn">Generate timeline</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRANSCRIPT -->
+      <section class="pane" id="pane-transcript">
+        <input type="search" class="transcript-search" id="transcript-search"
+               placeholder="Search the transcript…" />
+        <div class="pane-scroll" id="transcript-body">
+          <div class="pane-empty"><p>Loading transcript…</p></div>
+        </div>
+      </section>
+
+      <!-- QUIZ -->
+      <section class="pane" id="pane-quiz">
+        <div class="pane-scroll" id="quiz-body">
+          <div class="pane-empty">
+            <p>Test yourself with 5 questions generated from this video.</p>
+            <button class="btn solid" id="quiz-btn">Generate quiz</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FLASHCARDS -->
+      <section class="pane" id="pane-cards">
+        <div class="pane-scroll" id="cards-body">
+          <div class="pane-empty">
+            <p>Turn the video's key ideas into flip-to-reveal study cards.</p>
+            <button class="btn solid" id="cards-btn">Generate flashcards</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<!-- library drawer -->
+<div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+<aside class="drawer" id="drawer" hidden>
+  <div class="drawer-head">
+    <h3>Your library</h3>
+    <button class="icon-btn" id="drawer-close" title="Close">✕</button>
+  </div>
+  <div class="drawer-list" id="drawer-list"></div>
+</aside>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

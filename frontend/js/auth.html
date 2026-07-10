@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign in — VidSage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/auth.css" />
+</head>
+<body>
+
+<main class="auth-wrap">
+  <aside class="auth-side">
+    <a class="logo" href="/"><span class="logo-mark">▶</span> VidSage</a>
+    <h2>Every video<br />becomes a conversation.</h2>
+    <ul class="side-list">
+      <li><span class="tc">01</span> Paste any YouTube link</li>
+      <li><span class="tc">02</span> Ask it anything, by text or voice</li>
+      <li><span class="tc">03</span> Jump to the exact cited second</li>
+    </ul>
+  </aside>
+
+  <section class="auth-panel">
+    <div class="tabs" role="tablist">
+      <button class="tab active" id="tab-login" role="tab">Sign in</button>
+      <button class="tab" id="tab-register" role="tab">Create account</button>
+    </div>
+
+    <form id="login-form" class="auth-form">
+      <label>Email
+        <input type="email" name="email" autocomplete="email" required />
+      </label>
+      <label>Password
+        <input type="password" name="password" autocomplete="current-password" required />
+      </label>
+      <button class="btn solid" type="submit">Sign in</button>
+    </form>
+
+    <form id="register-form" class="auth-form" hidden>
+      <label>Name
+        <input type="text" name="name" autocomplete="name" minlength="2" required />
+      </label>
+      <label>Email
+        <input type="email" name="email" autocomplete="email" required />
+      </label>
+      <label>Password
+        <input type="password" name="password" autocomplete="new-password" minlength="6" required />
+        <small>At least 6 characters</small>
+      </label>
+      <button class="btn solid" type="submit">Create free account</button>
+    </form>
+
+    <p class="auth-error" id="auth-error" role="alert" hidden></p>
+  </section>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>
